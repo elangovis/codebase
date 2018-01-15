@@ -1,0 +1,64 @@
+func ScurveStgtoTgt (requestLogId string, projectId string, jobNumber string, blFlag string, intExtFlag string)  (error, string){
+	var err error
+	var status string
+
+
+	//get the internal/external flag from update control table in data base
+	intExtFlagLgc := "fromsql"
+	filterFlagLgc := "fromsql"
+	loopCnt := 0
+
+	// increase loop count to process Main items internal items and all together if we both options selected
+
+	if (filterFlagLgc == "MIA"){
+		loopCnt = 2
+	} else
+	{
+		loopCnt = 1
+	}
+
+
+	// assign right filter codes for iteration
+	newFilterFlagLgc := ""
+	for i:=0;i<loopCnt;i++ {
+		if (filterFlagLgc == "MIA" && loopCnt == 1) {
+			newFilterFlagLgc = "MIA_MI"
+
+		}else if (filterFlagLgc == "MIA" && loopCnt == 2){
+			newFilterFlagLgc = "MIA_A"
+		} else {
+			newFilterFlagLgc = filterFlagLgc
+		}
+
+		// get the max end date and min start date for the selected projects to define the s curve start date and end date
+		minStartDate := "get from sql"
+		maxEndDate := "get from sql"
+
+		var filterList []SCURVEDETAILS
+
+		var dataList []SCURVEDETAILS
+
+		//get distinct of all the departments, filters from stg tbl for job num/baseline combination to be transferred from stg to tgt
+		for j:=0;j<len(filterList);j++ {
+			filterList[i].IntExtFlag
+			filterList[i].Filter
+			filterList[i].Department_Name
+			filterList[i].Train
+
+			// HIT DB with the above values to get the s cruve daily data list, data list contains the data for the above filters
+                        // make sure the daily dates are in between min and max dates from above
+			for k:=0;k<len(dataList);k++ {
+
+				var insertList []SCURVEDETAILS
+				insertList[k].ContractId = dataList[j].ContractId
+				//also all the other values to be inserted till the cumulative values
+			}
+		}
+
+
+	}
+        // delete the data in target table for the current uniques combination of job num, filter flag, int ext flag and weight
+	//also delete api 3 values for those projects not in api 2 table
+	// insert the insert list into DB
+	return err, status
+}
